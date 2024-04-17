@@ -11,8 +11,10 @@ edition = "2023";
 
 package protobuf_test_messages.edition;
 
+import "third_party/java/protobuf/java_features.proto";
 import "google/protobuf/cpp_features.proto";
 
+option java_package = "com.google.protobuf_sample_messages.edition";
 option optimize_for = SPEED;
 option features.(pb.cpp).string_type = VIEW;
 
@@ -424,4 +426,14 @@ message TestAllRequiredTypesEdition {
     }
     int32 i = 9 [features.field_presence = LEGACY_REQUIRED];
   }
+}
+
+enum LargeEnum {
+  option features.(pb.java).large_enum = true;
+
+  UNSPECIFIED_LARGE_ENUM = 0;
+  LARGE_ENUM_1 = 1;
+  LARGE_ENUM_2 = 2;
+  LARGE_ENUM_3 = 3;
+  LARGE_ENUM_4 = 4;
 }
