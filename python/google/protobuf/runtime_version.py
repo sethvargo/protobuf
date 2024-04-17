@@ -35,6 +35,10 @@ PATCH = 0
 SUFFIX = '-dev'
 
 
+def _ReportVersionError(msg):
+  raise VersionError(msg)
+
+
 def ValidateProtobufRuntimeVersion(
     gen_domain, gen_major, gen_minor, gen_patch, gen_suffix, location
 ):
@@ -69,28 +73,28 @@ def ValidateProtobufRuntimeVersion(
   )
 
   if gen_domain != DOMAIN:
-    raise VersionError(
+    _ReportVersionError(
         'Detected mismatched Protobuf Gencode/Runtime domains when loading'
         f' {location}: gencode {gen_domain.name} runtime {DOMAIN.name}.'
         ' Cross-domain usage of Protobuf is not supported.'
     )
 
   if gen_major != MAJOR:
-    raise VersionError(
+    _ReportVersionError(
         'Detected mismatched Protobuf Gencode/Runtime major versions when'
         f' loading {location}: gencode {gen_version} runtime {version}.'
         f' Same major version is required. {error_prompt}'
     )
 
   if MINOR < gen_minor or (MINOR == gen_minor and PATCH < gen_patch):
-    raise VersionError(
+    _ReportVersionError(
         'Detected incompatible Protobuf Gencode/Runtime versions when loading'
         f' {location}: gencode {gen_version} runtime {version}. Runtime version'
         f' cannot be older than the linked gencode version. {error_prompt}'
     )
 
   if gen_suffix != SUFFIX:
-    raise VersionError(
+    _ReportVersionError(
         'Detected mismatched Protobuf Gencode/Runtime version suffixes when'
         f' loading {location}: gencode {gen_version} runtime {version}.'
         f' Version suffixes must be the same. {error_prompt}'
