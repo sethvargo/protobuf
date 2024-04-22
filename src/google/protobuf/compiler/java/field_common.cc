@@ -30,6 +30,9 @@ void SetCommonFieldVariables(
   (*variables)["kt_name"] = IsForbiddenKotlin(info->name)
                                 ? absl::StrCat(info->name, "_")
                                 : info->name;
+  (*variables)["safe_name"] = IsForbiddenKotlin(info->name)
+                                  ? absl::StrCat("`", info->name, "`")
+                                  : info->name;
   (*variables)["kt_capitalized_name"] =
       IsForbiddenKotlin(info->name) ? absl::StrCat(info->capitalized_name, "_")
                                     : info->capitalized_name;

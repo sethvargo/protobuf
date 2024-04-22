@@ -308,22 +308,21 @@ void ImmutableEnumFieldLiteGenerator::GenerateKotlinDslMembers(
   printer->Print(variables_,
                  "$kt_deprecation$public var $kt_name$: $kt_type$\n"
                  "  @JvmName(\"${$get$kt_capitalized_name$$}$\")\n"
-                 "  get() = $kt_dsl_builder$.${$get$capitalized_name$$}$()\n"
+                 "  get() = $kt_dsl_builder$.${$$safe_name$$}$\n"
                  "  @JvmName(\"${$set$kt_capitalized_name$$}$\")\n"
                  "  set(value) {\n"
-                 "    $kt_dsl_builder$.${$set$capitalized_name$$}$(value)\n"
+                 "    $kt_dsl_builder$.${$$safe_name$$}$ = value\n"
                  "  }\n");
 
   if (SupportUnknownEnumValue(descriptor_)) {
-    printer->Print(
-        variables_,
-        "$kt_deprecation$public var $kt_name$Value: kotlin.Int\n"
-        "  @JvmName(\"${$get$kt_capitalized_name$Value$}$\")\n"
-        "  get() = $kt_dsl_builder$.${$get$capitalized_name$Value$}$()\n"
-        "  @JvmName(\"${$set$kt_capitalized_name$Value$}$\")\n"
-        "  set(value) {\n"
-        "    $kt_dsl_builder$.${$set$capitalized_name$Value$}$(value)\n"
-        "  }\n");
+    printer->Print(variables_,
+                   "$kt_deprecation$public var $kt_name$Value: kotlin.Int\n"
+                   "  @JvmName(\"${$get$kt_capitalized_name$Value$}$\")\n"
+                   "  get() = $kt_dsl_builder$.${$$name$Value$}$\n"
+                   "  @JvmName(\"${$set$kt_capitalized_name$Value$}$\")\n"
+                   "  set(value) {\n"
+                   "    $kt_dsl_builder$.${$$name$Value$}$ = value\n"
+                   "  }\n");
   }
 
   WriteFieldAccessorDocComment(printer, descriptor_, CLEARER,
